@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vamos contar</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #a9b0a9; /* Verde cinza claro */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            color: #fff;
+            text-shadow: 1px 1px 3px #555;
+        }
+
+        section {
+            background: #fff;
+            border-radius: 15px;
+            padding: 25px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        #dados p {
+            margin: 10px 0;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+        }
+
+        input[type="button"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="button"]:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            line-height: 1.6em;
+            color: #222;
+        }
+
+        canvas {
+            display: block;
+            margin: 20px auto 0 auto;
+            background: #f5f5f5;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #fff;
+            font-style: italic;
+        }
+    
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <h1>Vamos contar</h1>
+    </header>
+    <section>
+        <div id="dados">
+            <p> Início: <input type="number" name="inicio" id="start"></p>
+            <p>Fim: <input type="number" id="end"></p>
+            <p>Passo: <input type="number" id="step"></p>
+            <p><input type="button" value="Contar" onclick="contar()"></p>
+        </div>
+        <div id="result">
+            <p>Preparando a contagem...</p>
+        </div>
+        <canvas id="canvas" width="500" height="100"></canvas>
+    </section>
+    <footer>
+        <p>&copy; Polo 2025</p>
+    </footer>
+    <script>
+        function contar() {
+            let startNumber = document.getElementById("start");
+            let endNumber = document.getElementById("end");
+            let stepNumber = document.getElementById("step");
+            let result = document.getElementById("result");
+            let canvas = document.getElementById("canvas");
+            let ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.font = "20px Arial";
+            ctx.fillStyle = "#333";
+
+            if (startNumber.value.length == 0 || endNumber.value.length == 0 || stepNumber.value.length == 0) {
+                result.innerHTML = "Impossível contar!";
+            } else {
+                result.innerHTML = "Contando: <br>";
+                result.innerHTML += "🏠 ";
+                let i = Number(startNumber.value);
+                let f = Number(endNumber.value);
+                let p = Number(stepNumber.value);
+
+                if (p <= 0) {
+                    window.alert("Erro: Passo inválido. Usando passo 1 por padrão.");
+                    p = 1;
+                }
+
+                let posX = 10;
+
+                if (i < f) {
+                    for (let c = i; c <= f; c += p) {
+                        result.innerHTML += `${c} ✌🏻 `;
+                        ctx.fillText(`${c}`, posX, 50);
+                        posX += 40;
+                    }
+                } else {
+                    for (let c = i; c >= f; c -= p) {
+                        result.innerHTML += `${c} ✌🏻 `;
+                        ctx.fillText(`${c}`, posX, 50);
+                        posX += 40;
+                    }
+                }
+                result.innerHTML += `🏁`;
+            }
+        }
+    </script>
+</body>
+</html>
